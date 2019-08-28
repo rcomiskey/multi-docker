@@ -18,3 +18,4 @@ after_success:
   - docker push rcomiskey/multi-nginx 
   - docker push rcomiskey/multi-server
   - docker push rcomiskey/multi-worker
+  
