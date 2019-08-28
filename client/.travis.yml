@@ -1,0 +1,20 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t rcomiskey/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run rcomiskey/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t rcomiskey/multi-client ./client
+  - docker build -t rcomiskey/multi-nginx ./nginx
+  - docker build -t rcomiskey/multi-server ./server
+  - docker build -t rcomiskey/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push rcomiskey/multi-client
+  - docker push rcomiskey/multi-nginx 
+  - docker push rcomiskey/multi-server
+  - docker push rcomiskey/multi-worker
