@@ -1,0 +1,29 @@
+{
+     "AWSEBDockerrunVersion": 2,
+     "containerDefinitions": [
+         {
+             "name": "client",
+             "image": "rcomiskey/multi-client",
+             "hostname": "client",
+             "essential": false
+         },
+         {
+            "name": "server",
+            "image": "rcomiskey/multi-server",
+            "hostname": "api",
+            "essential": false
+        },
+        {
+            "name": "worker",
+            "image": "rcomiskey/multi-worker",
+            "hostname": "worker",
+            "essential": false
+        },
+        {
+            "name": "nginx",
+            "image": "rcomiskey/multi-server",
+            "hostname": "api",
+            "essential": true
+        }
+     ]
+}

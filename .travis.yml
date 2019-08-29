@@ -15,7 +15,22 @@ after_success:
   - docker build -t rcomiskey/multi-worker ./worker
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push rcomiskey/multi-client
-  - docker push rcomiskey/multi-nginx 
+  - docker push rcomiskey/multi-nginx
   - docker push rcomiskey/multi-server
   - docker push rcomiskey/multi-worker
   
+deploy:
+  provider: elasticbeanstalk
+  region: eu-west-1
+  app: multi-docker
+  env: MultiDocker-env
+  bucket_name: elasticbeanstalk-eu-west-1-234188558248
+  bucket_path: docker_multi
+  on:
+    branch: master
+  access_key_id:
+    secure: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
+
+
